@@ -53,4 +53,17 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Navegacion
+    implementation("androidx.navigation:navigation-compose:2.9.7")
+
+    // ViewModel + Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+
+    // Cliente HTTP, parser JSON, Converter JSON a data class
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
 }
