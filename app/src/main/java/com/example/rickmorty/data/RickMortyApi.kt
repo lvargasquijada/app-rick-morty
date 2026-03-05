@@ -12,7 +12,5 @@ interface RickMortyApi {
     // suspend:
     // * ejecutar sin bloquear el hilo principal
     @GET("episode")
-    suspend fun getEspisodes(
-
-    ) : EpisodesResponseDTO
+    suspend fun getEspisodes() : EpisodesResponseDTO
 }

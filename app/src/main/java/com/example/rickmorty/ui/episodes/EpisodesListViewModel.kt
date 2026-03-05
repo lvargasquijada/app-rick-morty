@@ -1,23 +1,40 @@
 package com.example.rickmorty.ui.episodes
 
 import androidx.lifecycle.ViewModel
-import com.example.rickmorty.ui.fake.FakeEpisode
-import com.example.rickmorty.ui.fake.fakeEpisodes
+import androidx.lifecycle.viewModelScope
+import com.example.rickmorty.data.ApiClient
+import com.example.rickmorty.data.EpisodeDTO
 import com.example.rickmorty.ui.state.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class EpisodesListViewModel : ViewModel() {
 
     // MutableStateFlow: "estado mutable interno" que la VM actualiza
-    private val _state = MutableStateFlow<UiState<List<FakeEpisode>>>(UiState.Loading)
+    private val _state = MutableStateFlow<UiState<List<EpisodeDTO>>>(UiState.Loading)
 
     // StateFlow: "Estado de lectura" -> UI observa
-    val state: StateFlow<UiState<List<FakeEpisode>>> = _state
+    val state: StateFlow<UiState<List<EpisodeDTO>>> = _state
 
     fun load() {
-        // Cambiarlo por los datos de la API *******
-        _state.value = UiState.Success(fakeEpisodes)
+        // 1 - Loading
+        _state.value = UiState.Loading
+
+        // 2 - Lanzar ciclo de vida (coroutine)
+        viewModelScope.launch {
+            // try catch
+            runCatching {
+                // 3 - LLamo a la api
+                ApiClient.api.getEspisodes().results
+            }.onSuccess { episodes ->
+                // 4 - Si funciona, Publicamos los datos
+                _state.value = UiState.Success(episodes)
+            }.onFailure { error ->
+                // 5 - Si falla, publicamos el error
+                _state.value = UiState.Error(error.message ?: "Error desconocido" )
+            }
+        }
     }
 
 }

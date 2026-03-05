@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.rickmorty.ui.fake.FakeEpisode
+import com.example.rickmorty.data.EpisodeDTO
 import com.example.rickmorty.ui.state.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +52,7 @@ fun EpisodesListScreen() {
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
 
-                        items(s.data) { episode: FakeEpisode ->
+                        items(s.data) { episode: EpisodeDTO ->
 
                             Card(
                                 modifier = Modifier
@@ -69,7 +69,7 @@ fun EpisodesListScreen() {
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                     Text(
-                                        text = "${episode.code} · ${episode.airData}",
+                                        text = "${episode.episode} · ${episode.air_date}",
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
