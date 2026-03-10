@@ -16,8 +16,9 @@ import com.example.rickmorty.ui.state.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EpisodesListScreen() {
-
+fun EpisodesListScreen(
+    onEpisodeClick: (Int) -> Unit
+) {
     // Creamos el VM "manual" (para mantenerlo simple)
     val vm = remember { EpisodesListViewModel() }
 
@@ -28,15 +29,13 @@ fun EpisodesListScreen() {
         vm.load()
     }
 
-
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Episodes (Fake)") }
+                title = { Text("Episodes (API)") }
             )
         }
     ) { padding ->
-
         Column(
             Modifier
                 .padding(padding)
@@ -58,7 +57,7 @@ fun EpisodesListScreen() {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-
+                                        onEpisodeClick(episode.id)
                                     }
                             ) {
                                 Column(
